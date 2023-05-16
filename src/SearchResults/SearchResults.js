@@ -4,6 +4,7 @@ const SearchResults = ({ artistData }) => {
   return (
     <div>
       <div>{JSON.stringify(artistData)}</div>
+      
     </div>
   );
 };

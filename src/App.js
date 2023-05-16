@@ -51,7 +51,12 @@ const App = () => {
         setArtistData({ data });
       });
 
-    // Display artist data to the user
+    let getArtistsTopTracks = await fetch(
+      `${BASE_URL}/v1/artists/${artistID}/top-tracks?country=US`,
+      artistParams
+    )
+    .then((results) => results.json())
+    .then((data) => console.log(data));
   };
 
   useEffect(() => {
