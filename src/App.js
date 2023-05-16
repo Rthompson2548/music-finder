@@ -15,10 +15,10 @@ const App = () => {
   const handleSubmitSongSearch = (event) => {
     event.preventDefault();
     console.log("handleSubmitSongSearch...");
-    handleSearchSong();
+    handleSearchArtist();
   };
 
-  const handleSearchSong = async () => {
+  const handleSearchArtist = async () => {
     console.log(`Searching for ${searchInput}...`);
     // Get request using search to get the artist ID
     let artistParams = {
