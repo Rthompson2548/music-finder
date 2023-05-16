@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import "./App.css";
+import "../../src/App.css";
 import Search from "./Search/Search";
 import SearchResults from "./SearchResults/SearchResults";
 
@@ -10,7 +10,7 @@ const BASE_URL = "https://api.spotify.com";
 const App = () => {
   const [searchInput, setSearchInput] = useState("");
   const [accessToken, setAccessToken] = useState("");
-  const [artistData, setArtistData] = useState([]);
+  const [artistData, setArtistData] = useState();
 
   const handleSubmitSongSearch = (event) => {
     event.preventDefault();
@@ -40,7 +40,7 @@ const App = () => {
         return data.artists.items[0].id;
       });
 
-    // Get request with Artist ID grab all data for artist
+    // Get request with artist ID grab all data for artist
     let getArtistData = await fetch(
       `${BASE_URL}/v1/artists/${artistID}`,
       artistParams
@@ -51,12 +51,23 @@ const App = () => {
         setArtistData({ data });
       });
 
+    // Gets top tracks from artist by ID
     let getArtistsTopTracks = await fetch(
       `${BASE_URL}/v1/artists/${artistID}/top-tracks?country=US`,
       artistParams
     )
-    .then((results) => results.json())
-    .then((data) => console.log(data));
+      .then((results) => results.json())
+      .then((data) => console.log(data));
+
+    // Gets 20 related artists
+    let getArtistRelatedArtists = await fetch(
+      `${BASE_URL}/v1/artists/${artistID}/related-artists`,
+      artistParams
+    )
+      .then((result) => result.json())
+      .then((data) => {
+        console.log(data.artists);
+      });
   };
 
   useEffect(() => {
