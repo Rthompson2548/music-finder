@@ -47,8 +47,10 @@ const App = () => {
     )
       .then((result) => result.json())
       .then((data) => {
-        console.log(data);
+        // console.log(data);
         setArtistData({ data });
+        console.log("artistData:") 
+        console.log(Object.keys(artistData));
       });
 
     // Gets top tracks from artist by ID
@@ -68,6 +70,8 @@ const App = () => {
       .then((data) => {
         console.log(data.artists);
       });
+
+
   };
 
   useEffect(() => {
