@@ -10,6 +10,7 @@ const BASE_URL = "https://api.spotify.com";
 const App = () => {
   const [searchInput, setSearchInput] = useState("");
   const [accessToken, setAccessToken] = useState("");
+  const [artistID, setArtistID] = useState("");
 
   const handleSubmitSongSearch = (event) => {
     event.preventDefault();
@@ -27,12 +28,23 @@ const App = () => {
         "Authorization": `Bearer ${accessToken}`
       }
     }
-    let artistID = await fetch(`${BASE_URL}/v1/search?q=${searchInput}&type=artist`, artistParams)
+    let getArtistID = await fetch(`${BASE_URL}/v1/search?q=${searchInput}&type=artist`, artistParams)
       .then((result) => result.json())
-      .then((data) => data.artists.items[0].id);
+      .then((data) => {
+        // let artistID;
+        setArtistID(data.artists.items[0].id);
+        console.log(`artistID: ${artistID}`);
+      });
+      
     
-    // Get request with Artist ID grab all albums for artist
-    // Display the albums to the user
+    // Get request with Artist ID grab all data for artist
+    let artistData = await fetch(`${BASE_URL}/v1/artists/${artistID}`, artistParams)
+    .then((result) => result.json())
+    .then((data) => {
+      console.log(data)}
+      )
+
+    // Display artist data to the user
   };
 
   useEffect(() => {
