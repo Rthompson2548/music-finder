@@ -10,7 +10,7 @@ const BASE_URL = "https://api.spotify.com";
 const App = () => {
   const [searchInput, setSearchInput] = useState("");
   const [accessToken, setAccessToken] = useState("");
-  const [artistID, setArtistID] = useState("");
+  const [artistData, setArtistData] = useState([]);
 
   const handleSubmitSongSearch = (event) => {
     event.preventDefault();
@@ -25,24 +25,31 @@ const App = () => {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
-        "Authorization": `Bearer ${accessToken}`
-      }
-    }
-    let getArtistID = await fetch(`${BASE_URL}/v1/search?q=${searchInput}&type=artist`, artistParams)
+        Authorization: `Bearer ${accessToken}`,
+      },
+    };
+
+    // Get request with artist name to get artist Spotify ID
+    let artistID = await fetch(
+      `${BASE_URL}/v1/search?q=${searchInput}&type=artist`,
+      artistParams
+    )
       .then((result) => result.json())
       .then((data) => {
-        // let artistID;
-        setArtistID(data.artists.items[0].id);
-        console.log(`artistID: ${artistID}`);
+        // console.log(data.artists.items[0].id)
+        return data.artists.items[0].id;
       });
-      
-    
+
     // Get request with Artist ID grab all data for artist
-    let artistData = await fetch(`${BASE_URL}/v1/artists/${artistID}`, artistParams)
-    .then((result) => result.json())
-    .then((data) => {
-      console.log(data)}
-      )
+    let getArtistData = await fetch(
+      `${BASE_URL}/v1/artists/${artistID}`,
+      artistParams
+    )
+      .then((result) => result.json())
+      .then((data) => {
+        console.log(data);
+        setArtistData({ data });
+      });
 
     // Display artist data to the user
   };
@@ -74,9 +81,7 @@ const App = () => {
         setSearchInput={setSearchInput}
         handleSubmitSongSearch={handleSubmitSongSearch}
       />
-      {/* {searchInput} */}
-      {/* { accessToken } */}
-      <SearchResults />
+      <SearchResults artistData={artistData} />
     </div>
   );
 };

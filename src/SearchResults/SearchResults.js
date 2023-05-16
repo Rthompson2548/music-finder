@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 
-const SearchResults = ({ }) => {
+const SearchResults = ({ artistData }) => {
   return (
     <div>
-      <h1>Search Results!</h1>
+      <div>{JSON.stringify(artistData)}</div>
     </div>
   );
 };
