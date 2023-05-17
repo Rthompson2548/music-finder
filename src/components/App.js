@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import "../../src/App.css";
 import Search from "./Search/Search";
 import SearchResults from "./SearchResults/SearchResults";
+import ArtistProfile from "./ArtistProfile/ArtistProfile";
 
 const CLIENT_ID = "03b53e31e7fd47998f5196660f2a8121";
 const CLIENT_SECRET = "cb002e7d5245461a9add7e41b442d312";
@@ -11,6 +12,7 @@ const App = () => {
   const [searchInput, setSearchInput] = useState("");
   const [accessToken, setAccessToken] = useState("");
   const [artistData, setArtistData] = useState();
+  const [artistID, setArtistID] = useState("");
 
   const handleSubmitSongSearch = (event) => {
     event.preventDefault();
@@ -30,19 +32,20 @@ const App = () => {
     };
 
     // Get request with artist name to get artist Spotify ID
-    let artistID = await fetch(
+    let getArtistID = await fetch(
       `${BASE_URL}/v1/search?q=${searchInput}&type=artist`,
       artistParams
     )
       .then((result) => result.json())
       .then((data) => {
         // console.log(data.artists.items[0].id)
+        setArtistID(data.artists.items[0].id);
         return data.artists.items[0].id;
       });
 
     // Get request with artist ID grab all data for artist
     let getArtistData = await fetch(
-      `${BASE_URL}/v1/artists/${artistID}`,
+      `${BASE_URL}/v1/artists/${getArtistID}`,
       artistParams
     )
       .then((result) => result.json())
@@ -50,12 +53,12 @@ const App = () => {
         // console.log(data);
         setArtistData({ data });
         console.log("artistData:") 
-        console.log(Object.keys(artistData));
+        console.log(artistData);
       });
 
     // Gets top tracks from artist by ID
     let getArtistsTopTracks = await fetch(
-      `${BASE_URL}/v1/artists/${artistID}/top-tracks?country=US`,
+      `${BASE_URL}/v1/artists/${getArtistID}/top-tracks?country=US`,
       artistParams
     )
       .then((results) => results.json())
@@ -63,7 +66,7 @@ const App = () => {
 
     // Gets 20 related artists
     let getArtistRelatedArtists = await fetch(
-      `${BASE_URL}/v1/artists/${artistID}/related-artists`,
+      `${BASE_URL}/v1/artists/${getArtistID}/related-artists`,
       artistParams
     )
       .then((result) => result.json())
@@ -94,6 +97,19 @@ const App = () => {
       });
   }, []);
 
+  useEffect(() => {
+    fetch(`${BASE_URL}/v1/artists/${artistID}`)
+      .then(response => response.json())
+      .then(data => {
+        setArtistData(data);
+        console.log(artistData);
+        // console.log(`images: ${artistData.images[0].url}`)
+      }
+        
+      );
+  }, [artistID]);
+
+
   return (
     <div className="App">
       <h1>App</h1>
@@ -101,7 +117,10 @@ const App = () => {
         setSearchInput={setSearchInput}
         handleSubmitSongSearch={handleSubmitSongSearch}
       />
-      <SearchResults artistData={artistData} />
+      {
+        artistData ? <SearchResults artistData={artistData} /> : <p>No data yet</p>  
+      }
+      {/* <ArtistProfile artistData={artistData} /> */}
     </div>
   );
 };
