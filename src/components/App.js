@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "../../src/App.css";
 import Search from "./Search/Search";
-import SearchResults from "./SearchResults/SearchResults";
 import ArtistProfile from "./ArtistProfile/ArtistProfile";
 
 const CLIENT_ID = "03b53e31e7fd47998f5196660f2a8121";
@@ -11,25 +10,29 @@ const BASE_URL = "https://api.spotify.com";
 const App = () => {
   const [searchInput, setSearchInput] = useState("");
   const [accessToken, setAccessToken] = useState("");
-  const [artistData, setArtistData] = useState();
+  const [artistData, setArtistData] = useState(null);
   const [artistID, setArtistID] = useState("");
+  const [displayArtistData, setDisplayArtistData] = useState(false);
 
   const handleSubmitSongSearch = (event) => {
     event.preventDefault();
+    setDisplayArtistData(false);
     console.log("handleSubmitSongSearch...");
     handleSearchArtist();
   };
 
+  let artistParams = {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${accessToken}`,
+    },
+  };
+
   const handleSearchArtist = async () => {
     console.log(`Searching for ${searchInput}...`);
-    // Get request using search to get the artist ID
-    let artistParams = {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${accessToken}`,
-      },
-    };
+    // // Get request using search to get the artist ID
+    
 
     // Get request with artist name to get artist Spotify ID
     let getArtistID = await fetch(
@@ -38,23 +41,22 @@ const App = () => {
     )
       .then((result) => result.json())
       .then((data) => {
-        // console.log(data.artists.items[0].id)
         setArtistID(data.artists.items[0].id);
         return data.artists.items[0].id;
       });
 
-    // Get request with artist ID grab all data for artist
-    let getArtistData = await fetch(
-      `${BASE_URL}/v1/artists/${getArtistID}`,
-      artistParams
-    )
-      .then((result) => result.json())
-      .then((data) => {
-        // console.log(data);
-        setArtistData({ data });
-        console.log("artistData:") 
-        console.log(artistData);
-      });
+      let getArtistInfo = await fetch(
+        `${BASE_URL}/v1/artists/${getArtistID}`,
+        artistParams
+      )
+        .then((result) => result.json())
+        .then((data) => {
+          setArtistData(data);
+          console.log(artistData);
+          // Display artist data once all data has been fetched
+          setDisplayArtistData(true);
+        })
+       
 
     // Gets top tracks from artist by ID
     let getArtistsTopTracks = await fetch(
@@ -62,7 +64,9 @@ const App = () => {
       artistParams
     )
       .then((results) => results.json())
-      .then((data) => console.log(data));
+      .then((data) => {
+        // console.log(data)
+      });
 
     // Gets 20 related artists
     let getArtistRelatedArtists = await fetch(
@@ -71,10 +75,8 @@ const App = () => {
     )
       .then((result) => result.json())
       .then((data) => {
-        console.log(data.artists);
+        // console.log(data.artists);
       });
-
-
   };
 
   useEffect(() => {
@@ -92,23 +94,20 @@ const App = () => {
     fetch("https://accounts.spotify.com/api/token", authParams)
       .then((result) => result.json())
       .then((data) => {
-        console.log(data);
+        // console.log(data);
         setAccessToken(data["access_token"]);
       });
   }, []);
 
+  // // Get request with artist ID grab all data for artist
   useEffect(() => {
-    fetch(`${BASE_URL}/v1/artists/${artistID}`)
-      .then(response => response.json())
-      .then(data => {
+    fetch(`${BASE_URL}/v1/artists/${artistID}`, artistParams)
+      .then((response) => response.json())
+      .then((data) => {
         setArtistData(data);
         console.log(artistData);
-        // console.log(`images: ${artistData.images[0].url}`)
-      }
-        
-      );
+      });
   }, [artistID]);
-
 
   return (
     <div className="App">
@@ -117,10 +116,8 @@ const App = () => {
         setSearchInput={setSearchInput}
         handleSubmitSongSearch={handleSubmitSongSearch}
       />
-      {
-        artistData ? <SearchResults artistData={artistData} /> : <p>No data yet</p>  
-      }
-      {/* <ArtistProfile artistData={artistData} /> */}
+ 
+      {displayArtistData === true && <ArtistProfile artistData={artistData} />}
     </div>
   );
 };
