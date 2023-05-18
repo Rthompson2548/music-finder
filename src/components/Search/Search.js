@@ -4,7 +4,6 @@ const Search = ({ setSearchInput, handleSubmitSongSearch }) => {
   return (
     <div>
       <form>
-        <label>Search...</label>
         <input
           placeholder="Enter a song..."
           onChange={(e) => setSearchInput(e.target.value)}

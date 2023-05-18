@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-const ArtistProfile = ({ artistData }) => {
+const ArtistProfile = ({ artistData, artistProfileInfo }) => {
 
   if (!artistData) {
     return <p>Loading artist details...</p>
@@ -13,6 +13,7 @@ const ArtistProfile = ({ artistData }) => {
 
   return (
     <div>
+      {/* <p>{JSON.stringify(artistProfileInfo[1])}</p> */}
       <h1>{artistData.name}</h1>
       <h2>#{artistData.popularity}</h2>
       <h2>Followers: {artistData.followers.total}</h2>

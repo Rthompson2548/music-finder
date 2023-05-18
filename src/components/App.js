@@ -11,6 +11,8 @@ const App = () => {
   const [searchInput, setSearchInput] = useState("");
   const [accessToken, setAccessToken] = useState("");
   const [artistData, setArtistData] = useState(null);
+  const [artistTopTracks, setArtistTopTracks] = useState(null);
+  const [artistProfileInfo, setArtistProfileInfo] = useState([]);
   const [artistID, setArtistID] = useState("");
   const [displayArtistData, setDisplayArtistData] = useState(false);
 
@@ -32,7 +34,6 @@ const App = () => {
   const handleSearchArtist = async () => {
     console.log(`Searching for ${searchInput}...`);
     // // Get request using search to get the artist ID
-    
 
     // Get request with artist name to get artist Spotify ID
     let getArtistID = await fetch(
@@ -45,18 +46,16 @@ const App = () => {
         return data.artists.items[0].id;
       });
 
-      let getArtistInfo = await fetch(
-        `${BASE_URL}/v1/artists/${getArtistID}`,
-        artistParams
-      )
-        .then((result) => result.json())
-        .then((data) => {
-          setArtistData(data);
-          console.log(artistData);
-          // Display artist data once all data has been fetched
-          setDisplayArtistData(true);
-        })
-       
+    let getArtistInfo = await fetch(
+      `${BASE_URL}/v1/artists/${getArtistID}`,
+      artistParams
+    )
+      .then((result) => result.json())
+      .then((data) => {
+        setArtistData(data);
+        // Display artist data once all data has been fetched
+        setDisplayArtistData(true);
+      });
 
     // Gets top tracks from artist by ID
     let getArtistsTopTracks = await fetch(
@@ -65,7 +64,8 @@ const App = () => {
     )
       .then((results) => results.json())
       .then((data) => {
-        // console.log(data)
+        // console.log(data);
+        setArtistTopTracks(data);
       });
 
     // Gets 20 related artists
@@ -77,6 +77,10 @@ const App = () => {
       .then((data) => {
         // console.log(data.artists);
       });
+
+    setArtistProfileInfo([{ artistData }, { artistTopTracks }]);
+    // console.log(`artistProfileInfo[0]: ${JSON.stringify(artistProfileInfo[0])}`);
+    // console.log(`artistProfileInfo[1]: ${JSON.stringify(artistProfileInfo[1])}`);
   };
 
   useEffect(() => {
@@ -111,13 +115,17 @@ const App = () => {
 
   return (
     <div className="App">
-      <h1>App</h1>
       <Search
         setSearchInput={setSearchInput}
         handleSubmitSongSearch={handleSubmitSongSearch}
       />
- 
-      {displayArtistData === true && <ArtistProfile artistData={artistData} />}
+
+      {displayArtistData === true && (
+        <ArtistProfile
+          artistData={artistData}
+          artistProfileInfo={artistProfileInfo}
+        />
+      )}
     </div>
   );
 };
