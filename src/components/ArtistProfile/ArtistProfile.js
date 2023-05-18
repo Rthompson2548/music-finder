@@ -13,17 +13,14 @@ const ArtistProfile = ({ artistData, artistProfileInfo }) => {
 
   return (
     <div>
-      {/* <p>{JSON.stringify(artistProfileInfo[1])}</p> */}
       <h1>{artistData.name}</h1>
+      {/* <h2>Name:{artistProfileInfo[1].name}</h2> */}
       <h2>#{artistData.popularity}</h2>
       <h2>Followers: {artistData.followers.total}</h2>
       <h2>Genre: {artistData.genres.join(" , ")}</h2>
-      <img src={artistData.images[2].url} />  
-    <ul>
-      { 
-        keys.forEach((key) => <li key={key}>{artistData[key]}</li>)
-      }
-    </ul>
+      <img src={artistData.images[1].url} />  
+      <p>{JSON.stringify(artistProfileInfo[1])}</p>
+      
     </div>
   );
 };

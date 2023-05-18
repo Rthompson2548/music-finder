@@ -33,7 +33,6 @@ const App = () => {
 
   const handleSearchArtist = async () => {
     console.log(`Searching for ${searchInput}...`);
-    // // Get request using search to get the artist ID
 
     // Get request with artist name to get artist Spotify ID
     let getArtistID = await fetch(
@@ -46,6 +45,7 @@ const App = () => {
         return data.artists.items[0].id;
       });
 
+    // Fetch data for artist by their ID
     let getArtistInfo = await fetch(
       `${BASE_URL}/v1/artists/${getArtistID}`,
       artistParams
@@ -53,13 +53,11 @@ const App = () => {
       .then((result) => result.json())
       .then((data) => {
         setArtistData(data);
-        // Display artist data once all data has been fetched
-        setDisplayArtistData(true);
       });
 
     // Gets top tracks from artist by ID
-    let getArtistsTopTracks = await fetch(
-      `${BASE_URL}/v1/artists/${getArtistID}/top-tracks?country=US`,
+    fetch(
+      `${BASE_URL}/v1/artists/${artistID}/top-tracks?country=US`,
       artistParams
     )
       .then((results) => results.json())
@@ -68,19 +66,9 @@ const App = () => {
         setArtistTopTracks(data);
       });
 
-    // Gets 20 related artists
-    let getArtistRelatedArtists = await fetch(
-      `${BASE_URL}/v1/artists/${getArtistID}/related-artists`,
-      artistParams
-    )
-      .then((result) => result.json())
-      .then((data) => {
-        // console.log(data.artists);
-      });
-
     setArtistProfileInfo([{ artistData }, { artistTopTracks }]);
-    // console.log(`artistProfileInfo[0]: ${JSON.stringify(artistProfileInfo[0])}`);
-    // console.log(`artistProfileInfo[1]: ${JSON.stringify(artistProfileInfo[1])}`);
+    // Display artist data once all data has been fetched
+    setDisplayArtistData(true);
   };
 
   useEffect(() => {
@@ -102,16 +90,6 @@ const App = () => {
         setAccessToken(data["access_token"]);
       });
   }, []);
-
-  // // Get request with artist ID grab all data for artist
-  useEffect(() => {
-    fetch(`${BASE_URL}/v1/artists/${artistID}`, artistParams)
-      .then((response) => response.json())
-      .then((data) => {
-        setArtistData(data);
-        console.log(artistData);
-      });
-  }, [artistID]);
 
   return (
     <div className="App">
