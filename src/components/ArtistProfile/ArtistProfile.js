@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-const ArtistProfile = ({ artistData, artistProfileInfo }) => {
+const ArtistProfile = ({ artistData, artistProfileInfo, artistTopTracks }) => {
 
   if (!artistData) {
     return <p>Loading artist details...</p>
@@ -19,8 +19,9 @@ const ArtistProfile = ({ artistData, artistProfileInfo }) => {
       <h2>Followers: {artistData.followers.total}</h2>
       <h2>Genre: {artistData.genres.join(" , ")}</h2>
       <img src={artistData.images[1].url} />  
-      <p>{JSON.stringify(artistProfileInfo[1])}</p>
-      
+      <p>Top tracks: </p>
+      {/* <p>{JSON.stringify(artistProfileInfo[1])}</p> */}
+      <p>{JSON.stringify(artistTopTracks)}</p>
     </div>
   );
 };

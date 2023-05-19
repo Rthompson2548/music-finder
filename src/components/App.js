@@ -52,19 +52,26 @@ const App = () => {
     )
       .then((result) => result.json())
       .then((data) => {
+        console.log("artistData:")
+        console.log(data)
         setArtistData(data);
       });
 
+      console.log("in between calls")
     // Gets top tracks from artist by ID
     fetch(
-      `${BASE_URL}/v1/artists/${artistID}/top-tracks?country=US`,
+      `${BASE_URL}/v1/artists/${getArtistID}/top-tracks?country=US`,
       artistParams
     )
-      .then((results) => results.json())
+      .then((result) => result.json())
       .then((data) => {
-        // console.log(data);
+        console.log(`artistID: ${artistID}`)
+        console.log("Top tracks:")
+        console.log(data);
         setArtistTopTracks(data);
       });
+
+    
 
     setArtistProfileInfo([{ artistData }, { artistTopTracks }]);
     // Display artist data once all data has been fetched
@@ -102,6 +109,7 @@ const App = () => {
         <ArtistProfile
           artistData={artistData}
           artistProfileInfo={artistProfileInfo}
+          artistTopTracks={artistTopTracks}
         />
       )}
     </div>
