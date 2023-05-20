@@ -20,23 +20,20 @@ const ArtistTopTracks = ({ artistTopTracks }) => {
   };
 
   return (
-      <ul>
-        {artistTopTracks &&
-          artistTopTracks.tracks.map((track) => (
-            <li key={track.id}>
-              {/* To do: Display button that plays preview of song */}
-              <h3>
-                <button 
-                onClick={() => handlePlay(track.preview_url)}
-                >
-                  {track.name}
-                </button>
-                <button onClick={handlePause}>Pause</button>
-              </h3>
-              
-            </li>
-          ))}
-      </ul>
+    <ul>
+      {artistTopTracks &&
+        artistTopTracks.tracks.map((track) => (
+          <li key={track.id}>
+            {/* To do: Display button that plays preview of song */}
+            <h3>
+              <button onClick={() => handlePlay(track.preview_url)}>
+                {track.name}
+              </button>
+              <button onClick={handlePause}>Pause</button>
+            </h3>
+          </li>
+        ))}
+    </ul>
   );
 };
 
