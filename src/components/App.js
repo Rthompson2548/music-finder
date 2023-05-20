@@ -67,7 +67,7 @@ const App = () => {
         console.log("Top tracks:");
         console.log(data);
         setArtistTopTracks(data);
-        console.log(`artistTopTracks: ${artistTopTracks}`)
+        console.log(artistTopTracks)
       });
   };
 

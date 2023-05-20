@@ -10,11 +10,6 @@ const ArtistProfile = ({ artistData, artistProfileInfo, artistTopTracks }) => {
     const value = artistData[key];
   }
 
-  const handleLogTracks = () => {
-    console.log(artistTopTracks);
-    console.log(artistTopTracks.tracks);
-    artistTopTracks.tracks.map((track) => console.log(track.name));
-  }
 
   return (
     <div>
@@ -25,9 +20,11 @@ const ArtistProfile = ({ artistData, artistProfileInfo, artistTopTracks }) => {
       <img src={artistData.images[1].url} />
       <ul>
         {
-          artistTopTracks.tracks.map((track) =>(
-            <li>
-              <div key={track.id}>{track.name}</div>
+          artistTopTracks && artistTopTracks.tracks.map((track) =>(
+            <li key={track.id}>
+              <div>{track.name}</div>
+              {/* To do: Display button that plays preview of song */}
+              <div>{track.preview_url}</div>
             </li>
           ))
         }
