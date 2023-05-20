@@ -7,10 +7,13 @@ const CLIENT_ID = "03b53e31e7fd47998f5196660f2a8121";
 const CLIENT_SECRET = "cb002e7d5245461a9add7e41b442d312";
 const BASE_URL = "https://api.spotify.com";
 
+// TO DO: create search results dropdown functionality
+
 const App = () => {
   const [searchInput, setSearchInput] = useState("");
   const [accessToken, setAccessToken] = useState("");
   const [artistData, setArtistData] = useState(null);
+  const [searchResults, setSearchResults] = useState(null);
   const [artistTopTracks, setArtistTopTracks] = useState(null);
   const [artistProfileInfo, setArtistProfileInfo] = useState([]);
   const [displayArtistData, setDisplayArtistData] = useState(false);
@@ -42,6 +45,9 @@ const App = () => {
     )
       .then((result) => result.json())
       .then((data) => {
+        console.log("artist search results");
+        let artists = data.artists.items;
+        setSearchResults(artists);
         return data.artists.items[0].id;
       });
 
@@ -67,7 +73,7 @@ const App = () => {
         console.log("Top tracks:");
         console.log(data);
         setArtistTopTracks(data);
-        console.log(artistTopTracks)
+        console.log(artistTopTracks);
       });
   };
 
@@ -97,6 +103,13 @@ const App = () => {
         setSearchInput={setSearchInput}
         handleSubmitSongSearch={handleSubmitSongSearch}
       />
+
+      <ul>
+        {
+          searchResults && searchResults.map((res) => <li key={res.id}>{res.name}</li>)
+        }
+      </ul>
+      
 
       {displayArtistData === true && (
         <ArtistProfile
