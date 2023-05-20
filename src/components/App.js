@@ -13,14 +13,15 @@ const App = () => {
   const [artistData, setArtistData] = useState(null);
   const [artistTopTracks, setArtistTopTracks] = useState(null);
   const [artistProfileInfo, setArtistProfileInfo] = useState([]);
-  const [artistID, setArtistID] = useState("");
   const [displayArtistData, setDisplayArtistData] = useState(false);
 
-  const handleSubmitSongSearch = (event) => {
+  const handleSubmitSongSearch = async (event) => {
     event.preventDefault();
     setDisplayArtistData(false);
     console.log("handleSubmitSongSearch...");
-    handleSearchArtist();
+    await handleSearchArtist();
+    // Display artist data once all data has been fetched
+    setDisplayArtistData(true);
   };
 
   let artistParams = {
@@ -41,7 +42,6 @@ const App = () => {
     )
       .then((result) => result.json())
       .then((data) => {
-        setArtistID(data.artists.items[0].id);
         return data.artists.items[0].id;
       });
 
@@ -52,12 +52,11 @@ const App = () => {
     )
       .then((result) => result.json())
       .then((data) => {
-        console.log("artistData:")
-        console.log(data)
+        console.log("artistData:");
+        console.log(data);
         setArtistData(data);
       });
 
-      console.log("in between calls")
     // Gets top tracks from artist by ID
     fetch(
       `${BASE_URL}/v1/artists/${getArtistID}/top-tracks?country=US`,
@@ -65,17 +64,11 @@ const App = () => {
     )
       .then((result) => result.json())
       .then((data) => {
-        console.log(`artistID: ${artistID}`)
-        console.log("Top tracks:")
+        console.log("Top tracks:");
         console.log(data);
         setArtistTopTracks(data);
+        console.log(`artistTopTracks: ${artistTopTracks}`)
       });
-
-    
-
-    setArtistProfileInfo([{ artistData }, { artistTopTracks }]);
-    // Display artist data once all data has been fetched
-    setDisplayArtistData(true);
   };
 
   useEffect(() => {

@@ -8,7 +8,12 @@ const Search = ({ setSearchInput, handleSubmitSongSearch }) => {
           placeholder="Enter a song..."
           onChange={(e) => setSearchInput(e.target.value)}
         />
-        <button type="submit" onClick={(event) => handleSubmitSongSearch(event)}>Search</button>
+        <button
+          type="submit"
+          onClick={(event) => handleSubmitSongSearch(event)}
+        >
+          Search
+        </button>
       </form>
     </div>
   );
