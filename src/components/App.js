@@ -38,10 +38,7 @@ const App = () => {
 
   const getArtistByID = async (artistID) => {
     // Fetch data for artist by their ID
-    await fetch(
-      `${BASE_URL}/v1/artists/${artistID}`,
-      artistParams
-    )
+    await fetch(`${BASE_URL}/v1/artists/${artistID}`, artistParams)
       .then((result) => result.json())
       .then((data) => {
         console.log("artistData:");
@@ -63,12 +60,15 @@ const App = () => {
         setArtistTopTracks(data);
         console.log(artistTopTracks);
       });
-  }
+  };
 
   // Function for handling when a user selects an artist from the search results dropdown
   const handleSearchResultClick = async (artistID) => {
+    setDisplayArtistData(false);
     await getArtistByID(artistID);
-  }
+    await getArtistTopTracks(artistID);
+    setDisplayArtistData(true);
+  };
 
   const handleSearchArtist = async (artist) => {
     // Get request with artist name to get artist Spotify ID
@@ -108,17 +108,12 @@ const App = () => {
   }, []);
 
   useEffect(() => {
-    console.log(`searchInput was changed to ${searchInput}`);
-
     if (searchInput.length > 0) {
       // Fetch IDs of all users with provided name
       fetch(`${BASE_URL}/v1/search?q=${searchInput}&type=artist`, artistParams)
         .then((result) => result.json())
         .then((data) => {
-          console.log("getting artist IDs...");
           setSearchResults(data.artists.items);
-          console.log(searchResults);
-          // return data.artists.items[0].id;
         });
     }
   }, [searchInput]);
@@ -133,10 +128,7 @@ const App = () => {
       <ul>
         {searchResults &&
           searchResults.map((res) => (
-            <li 
-            key={res.id}
-            onClick={() => handleSearchResultClick(res.id)}
-            >
+            <li key={res.id} onClick={() => handleSearchResultClick(res.id)}>
               {res.name}
             </li>
           ))}
