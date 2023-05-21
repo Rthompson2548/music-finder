@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useDebugValue } from "react";
 import "../../src/App.css";
 import Search from "./Search/Search";
 import ArtistProfile from "./ArtistProfile/ArtistProfile";
@@ -12,6 +12,7 @@ const BASE_URL = "https://api.spotify.com";
 const App = () => {
   const [searchInput, setSearchInput] = useState("");
   const [accessToken, setAccessToken] = useState("");
+  const [artistID, setArtistID] = useState(null);
   const [artistData, setArtistData] = useState(null);
   const [searchResults, setSearchResults] = useState(null);
   const [artistTopTracks, setArtistTopTracks] = useState(null);
@@ -22,7 +23,7 @@ const App = () => {
     event.preventDefault();
     setDisplayArtistData(false);
     console.log("handleSubmitSongSearch...");
-    await handleSearchArtist();
+    await handleSearchArtist(searchInput);
     // Display artist data once all data has been fetched
     setDisplayArtistData(true);
   };
@@ -35,25 +36,10 @@ const App = () => {
     },
   };
 
-  const handleSearchArtist = async () => {
-    console.log(`Searching for ${searchInput}...`);
-
-    // Get request with artist name to get artist Spotify ID
-    let getArtistID = await fetch(
-      `${BASE_URL}/v1/search?q=${searchInput}&type=artist`,
-      artistParams
-    )
-      .then((result) => result.json())
-      .then((data) => {
-        console.log("artist search results");
-        let artists = data.artists.items;
-        setSearchResults(artists);
-        return data.artists.items[0].id;
-      });
-
+  const getArtistByID = async (artistID) => {
     // Fetch data for artist by their ID
-    let getArtistInfo = await fetch(
-      `${BASE_URL}/v1/artists/${getArtistID}`,
+    await fetch(
+      `${BASE_URL}/v1/artists/${artistID}`,
       artistParams
     )
       .then((result) => result.json())
@@ -62,6 +48,25 @@ const App = () => {
         console.log(data);
         setArtistData(data);
       });
+  }
+
+  const handleSearchArtist = async (artist) => {
+    console.log(`Searching for ${artist}...`);
+
+    // Get request with artist name to get artist Spotify ID
+    let getArtistID = await fetch(
+      `${BASE_URL}/v1/search?q=${artist}&type=artist`,
+      artistParams
+    )
+      .then((result) => result.json())
+      .then((data) => {
+        console.log("artist search results");
+        let artists = data.artists.items;
+        // setSearchResults(artists);
+        return data.artists.items[0].id;
+      });
+
+    await getArtistByID(getArtistID);
 
     // Gets top tracks from artist by ID
     fetch(
@@ -122,7 +127,14 @@ const App = () => {
 
       <ul>
         {searchResults &&
-          searchResults.map((res) => <li key={res.id}>{res.name}</li>)}
+          searchResults.map((res) => (
+            <li 
+            key={res.id}
+            onClick={() => getArtistByID(res.id)}
+            >
+              {res.name}
+            </li>
+          ))}
       </ul>
 
       {displayArtistData === true && (
