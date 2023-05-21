@@ -2,6 +2,8 @@ import React, { useState, useEffect, useDebugValue } from "react";
 import "../../src/App.css";
 import Search from "./Search/Search";
 import ArtistProfile from "./ArtistProfile/ArtistProfile";
+import ArtistSummary from "./ArtistProfile/ArtistSummary";
+import ArtistTopTracks from "./ArtistProfile/ArtistTopTracks";
 
 const CLIENT_ID = "03b53e31e7fd47998f5196660f2a8121";
 const CLIENT_SECRET = "cb002e7d5245461a9add7e41b442d312";
@@ -143,11 +145,16 @@ const App = () => {
       </div>
 
       {displayArtistData === true && (
-        <ArtistProfile
-          artistData={artistData}
-          artistProfileInfo={artistProfileInfo}
-          artistTopTracks={artistTopTracks}
-        />
+        <div>
+          <h1>{artistData.name}</h1>
+          <ArtistSummary artistData={artistData} />
+          <ArtistTopTracks artistTopTracks={artistTopTracks} />
+          {/* <ArtistProfile
+            artistData={artistData}
+            artistProfileInfo={artistProfileInfo}
+            artistTopTracks={artistTopTracks}
+          /> */}
+        </div>
       )}
     </div>
   );
