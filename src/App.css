@@ -1,5 +1,29 @@
+.artistSearch {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh; /* Set the container height to the full viewport height */
+  position: relative;
+}
+
+.artistSearch_container {
+  width: 200px;
+  /* position: absolute; */
+}
+
+.artistSearch ul {
+  background-color: white;
+  color: black;
+}
+
+li {
+  list-style-type: none;
+}
+
 .App {
   text-align: center;
+  justify-content: center;
 }
 
 .App-logo {

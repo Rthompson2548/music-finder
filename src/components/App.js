@@ -15,6 +15,7 @@ const App = () => {
   const [artistID, setArtistID] = useState(null);
   const [artistData, setArtistData] = useState(null);
   const [searchResults, setSearchResults] = useState(null);
+  const [displaySearchResults, setDisplaySearchResults] = useState(false);
   const [artistTopTracks, setArtistTopTracks] = useState(null);
   const [artistProfileInfo, setArtistProfileInfo] = useState([]);
   const [displayArtistData, setDisplayArtistData] = useState(false);
@@ -48,7 +49,6 @@ const App = () => {
   };
 
   const getArtistTopTracks = async (artistID) => {
-    // Gets top tracks from artist by ID
     fetch(
       `${BASE_URL}/v1/artists/${artistID}/top-tracks?country=US`,
       artistParams
@@ -62,12 +62,13 @@ const App = () => {
       });
   };
 
-  // Function for handling when a user selects an artist from the search results dropdown
+  // Handle when a user selects an artist from the search results dropdown
   const handleSearchResultClick = async (artistID) => {
     setDisplayArtistData(false);
     await getArtistByID(artistID);
     await getArtistTopTracks(artistID);
     setDisplayArtistData(true);
+    setDisplaySearchResults(false);
   };
 
   const handleSearchArtist = async (artist) => {
@@ -78,13 +79,13 @@ const App = () => {
     )
       .then((result) => result.json())
       .then((data) => {
-        console.log("artist search results");
         let artists = data.artists.items;
         return data.artists.items[0].id;
       });
 
     await getArtistByID(getArtistID);
     await getArtistTopTracks(getArtistID);
+    setDisplaySearchResults(false);
   };
 
   useEffect(() => {
@@ -109,6 +110,7 @@ const App = () => {
 
   useEffect(() => {
     if (searchInput.length > 0) {
+      setDisplaySearchResults(true);
       // Fetch IDs of all users with provided name
       fetch(`${BASE_URL}/v1/search?q=${searchInput}&type=artist`, artistParams)
         .then((result) => result.json())
@@ -120,19 +122,25 @@ const App = () => {
 
   return (
     <div className="App">
-      <Search
-        setSearchInput={setSearchInput}
-        handleSubmitSongSearch={handleSubmitSongSearch}
-      />
+      <div className="artistSearch">
+        <div className="artistSearch_container">
+          <Search
+            setSearchInput={setSearchInput}
+            handleSubmitSongSearch={handleSubmitSongSearch}
+          />
+        </div>
 
-      <ul>
-        {searchResults &&
-          searchResults.map((res) => (
-            <li key={res.id} onClick={() => handleSearchResultClick(res.id)}>
-              {res.name}
-            </li>
-          ))}
-      </ul>
+        <div className="artistSearch_container">
+        <ul>
+          {searchResults && displaySearchResults &&
+            searchResults.map((res) => (
+              <li key={res.id} onClick={() => handleSearchResultClick(res.id)}>
+                {res.name}
+              </li>
+            ))}
+        </ul>
+        </div>
+      </div>
 
       {displayArtistData === true && (
         <ArtistProfile

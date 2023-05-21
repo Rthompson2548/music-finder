@@ -5,7 +5,7 @@ const Search = ({ setSearchInput, handleSubmitSongSearch }) => {
     <div>
       <form>
         <input
-          placeholder="Enter a song..."
+          placeholder="Enter artist name..."
           onChange={(e) => setSearchInput(e.target.value)}
         />
         <button type="submit" onClick={(event) => handleSubmitSongSearch(event)}>Search</button>
