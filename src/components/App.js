@@ -48,29 +48,12 @@ const App = () => {
         console.log(data);
         setArtistData(data);
       });
-  }
+  };
 
-  const handleSearchArtist = async (artist) => {
-    console.log(`Searching for ${artist}...`);
-
-    // Get request with artist name to get artist Spotify ID
-    let getArtistID = await fetch(
-      `${BASE_URL}/v1/search?q=${artist}&type=artist`,
-      artistParams
-    )
-      .then((result) => result.json())
-      .then((data) => {
-        console.log("artist search results");
-        let artists = data.artists.items;
-        // setSearchResults(artists);
-        return data.artists.items[0].id;
-      });
-
-    await getArtistByID(getArtistID);
-
+  const getArtistTopTracks = async (artistID) => {
     // Gets top tracks from artist by ID
     fetch(
-      `${BASE_URL}/v1/artists/${getArtistID}/top-tracks?country=US`,
+      `${BASE_URL}/v1/artists/${artistID}/top-tracks?country=US`,
       artistParams
     )
       .then((result) => result.json())
@@ -80,6 +63,28 @@ const App = () => {
         setArtistTopTracks(data);
         console.log(artistTopTracks);
       });
+  }
+
+  // Function for handling when a user selects an artist from the search results dropdown
+  const handleSearchResultClick = async (artistID) => {
+    await getArtistByID(artistID);
+  }
+
+  const handleSearchArtist = async (artist) => {
+    // Get request with artist name to get artist Spotify ID
+    let getArtistID = await fetch(
+      `${BASE_URL}/v1/search?q=${artist}&type=artist`,
+      artistParams
+    )
+      .then((result) => result.json())
+      .then((data) => {
+        console.log("artist search results");
+        let artists = data.artists.items;
+        return data.artists.items[0].id;
+      });
+
+    await getArtistByID(getArtistID);
+    await getArtistTopTracks(getArtistID);
   };
 
   useEffect(() => {
@@ -130,7 +135,7 @@ const App = () => {
           searchResults.map((res) => (
             <li 
             key={res.id}
-            onClick={() => getArtistByID(res.id)}
+            onClick={() => handleSearchResultClick(res.id)}
             >
               {res.name}
             </li>
