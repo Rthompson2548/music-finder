@@ -97,6 +97,22 @@ const App = () => {
       });
   }, []);
 
+  useEffect(() => {
+    console.log(`searchInput was changed to ${searchInput}`);
+
+    if (searchInput.length > 0) {
+      // Fetch IDs of all users with provided name
+      fetch(`${BASE_URL}/v1/search?q=${searchInput}&type=artist`, artistParams)
+        .then((result) => result.json())
+        .then((data) => {
+          console.log("getting artist IDs...");
+          setSearchResults(data.artists.items);
+          console.log(searchResults);
+          // return data.artists.items[0].id;
+        });
+    }
+  }, [searchInput]);
+
   return (
     <div className="App">
       <Search
@@ -105,11 +121,9 @@ const App = () => {
       />
 
       <ul>
-        {
-          searchResults && searchResults.map((res) => <li key={res.id}>{res.name}</li>)
-        }
+        {searchResults &&
+          searchResults.map((res) => <li key={res.id}>{res.name}</li>)}
       </ul>
-      
 
       {displayArtistData === true && (
         <ArtistProfile
