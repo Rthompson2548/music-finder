@@ -24,7 +24,7 @@ const ArtistTopTracks = ({ artistTopTracks, audio, setAudio }) => {
         artistTopTracks.tracks.map((track) => (
           <li key={track.id} className="top-track">
             <div className="top-track_container">
-              <img src={track.album.images[2].url} />
+              <img src={track.album.images[2].url} className="album-image" />
               {/* To do: Display button that plays preview of song */}
               <h3
                 onClick={() => handlePlay(track.preview_url)}

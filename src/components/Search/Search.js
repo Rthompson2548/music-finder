@@ -1,8 +1,9 @@
 import React, { useState } from "react";
+import "./Search.css"
 
 const Search = ({ setSearchInput, handleSubmitSongSearch, setDisplaySearchResults }) => {
   return (
-    <div>
+    <div className="search">
       <form>
         <input
           placeholder="Enter artist name..."
