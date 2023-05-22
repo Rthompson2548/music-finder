@@ -6,7 +6,7 @@ const ArtistSummary = ({ artistData }) => {
   return (
     <div className="artist-summary">
       <div>
-        <img src={artistData.images[2].url} />
+        <img src={artistData.images[1].url} className="circle-image" />
       </div>
       <div className="artist-summary-details">
         <h2>#{artistData.popularity}</h2>
