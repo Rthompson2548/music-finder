@@ -129,6 +129,7 @@ const App = () => {
           <Search
             setSearchInput={setSearchInput}
             handleSubmitSongSearch={handleSubmitSongSearch}
+            setDisplaySearchResults={setDisplaySearchResults}
           />
         </div>
 
