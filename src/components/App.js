@@ -60,8 +60,7 @@ const App = () => {
       .then((data) => {
         console.log("Top tracks:");
         console.log(data);
-        setArtistTopTracks(data);
-        console.log(artistTopTracks);
+        setArtistTopTracks(data);        
       });
   };
 

@@ -36,6 +36,7 @@ const ArtistTopTracks = ({ artistTopTracks, audio, setAudio }) => {
               >
                 Pause
               </button>
+              <img src={track.album.images[2].url} />
             </h3>
           </li>
         ))}
