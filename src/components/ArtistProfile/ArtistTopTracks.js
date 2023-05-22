@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 
-const ArtistTopTracks = ({ artistTopTracks }) => {
-  const [audio, setAudio] = useState(null);
+const ArtistTopTracks = ({ artistTopTracks, audio, setAudio }) => {
 
   const handlePlay = (previewUrl) => {
     if (audio) {

@@ -21,6 +21,7 @@ const App = () => {
   const [artistTopTracks, setArtistTopTracks] = useState(null);
   const [artistProfileInfo, setArtistProfileInfo] = useState([]);
   const [displayArtistData, setDisplayArtistData] = useState(false);
+  const [audio, setAudio] = useState(null);
 
   const handleSubmitSongSearch = async (event) => {
     event.preventDefault();
@@ -122,6 +123,12 @@ const App = () => {
     }
   }, [searchInput]);
 
+  useEffect(() => {
+    if (displayArtistData === false && audio) {
+      audio.pause();
+    }
+  }, [displayArtistData]);
+
   return (
     <div className="App">
       <div className="artistSearch">
@@ -134,14 +141,18 @@ const App = () => {
         </div>
 
         <div className="artistSearch_container">
-        <ul>
-          {searchResults && displaySearchResults &&
-            searchResults.map((res) => (
-              <li key={res.id} onClick={() => handleSearchResultClick(res.id)}>
-                {res.name}
-              </li>
-            ))}
-        </ul>
+          <ul>
+            {searchResults &&
+              displaySearchResults &&
+              searchResults.map((res) => (
+                <li
+                  key={res.id}
+                  onClick={() => handleSearchResultClick(res.id)}
+                >
+                  {res.name}
+                </li>
+              ))}
+          </ul>
         </div>
       </div>
 
@@ -149,7 +160,7 @@ const App = () => {
         <div>
           <h1>{artistData.name}</h1>
           <ArtistSummary artistData={artistData} />
-          <ArtistTopTracks artistTopTracks={artistTopTracks} />
+          <ArtistTopTracks artistTopTracks={artistTopTracks} audio={audio} setAudio={setAudio} />
           {/* <ArtistProfile
             artistData={artistData}
             artistProfileInfo={artistProfileInfo}
