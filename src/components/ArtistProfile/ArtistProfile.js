@@ -2,8 +2,13 @@ import React, { useState } from "react";
 import ArtistTopTracks from "./ArtistTopTracks";
 import ArtistSummary from "./ArtistSummary";
 
-const ArtistProfile = ({ artistData, artistProfileInfo, artistTopTracks }) => {
-  const [audio, setAudio] = useState(null);
+const ArtistProfile = ({
+  artistData,
+  artistProfileInfo,
+  artistTopTracks,
+  audio,
+  setAudio,
+}) => {
 
   if (!artistProfileInfo) {
     return <p>Loading artist details...</p>;
@@ -17,7 +22,11 @@ const ArtistProfile = ({ artistData, artistProfileInfo, artistTopTracks }) => {
   return (
     <div>
       <ArtistSummary artistData={artistData} />
-      <ArtistTopTracks artistTopTracks={artistTopTracks} />
+      <ArtistTopTracks
+        artistTopTracks={artistTopTracks}
+        audio={audio}
+        setAudio={setAudio}
+      />
     </div>
   );
 };

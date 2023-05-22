@@ -89,6 +89,7 @@ const App = () => {
     await getArtistByID(getArtistID);
     await getArtistTopTracks(getArtistID);
     setDisplaySearchResults(false);
+    setDisplayArtistData(true);
   };
 
   useEffect(() => {
@@ -159,13 +160,13 @@ const App = () => {
       {displayArtistData === true && (
         <div>
           <h1>{artistData.name}</h1>
-          <ArtistSummary artistData={artistData} />
-          <ArtistTopTracks artistTopTracks={artistTopTracks} audio={audio} setAudio={setAudio} />
-          {/* <ArtistProfile
+          <ArtistProfile
             artistData={artistData}
             artistProfileInfo={artistProfileInfo}
             artistTopTracks={artistTopTracks}
-          /> */}
+            audio={audio} 
+            setAudio={setAudio}
+          />
         </div>
       )}
     </div>

@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 
 const ArtistTopTracks = ({ artistTopTracks, audio, setAudio }) => {
-
   const handlePlay = (previewUrl) => {
     if (audio) {
       audio.pause();
@@ -25,10 +24,18 @@ const ArtistTopTracks = ({ artistTopTracks, audio, setAudio }) => {
           <li key={track.id}>
             {/* To do: Display button that plays preview of song */}
             <h3>
-              <button onClick={() => handlePlay(track.preview_url)}>
+              <button
+                onClick={() => handlePlay(track.preview_url)}
+                disabled={track.preview_url === null}
+              >
                 {track.name}
               </button>
-              <button onClick={handlePause}>Pause</button>
+              <button
+                onClick={handlePause}
+                disabled={track.preview_url === null}
+              >
+                Pause
+              </button>
             </h3>
           </li>
         ))}
