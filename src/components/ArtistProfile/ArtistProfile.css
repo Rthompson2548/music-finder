@@ -1,44 +1,48 @@
 i {
-    font-size: 30px;
-    margin-right: 10px;
+  font-size: 30px;
+  margin-right: 10px;
 }
 
 .artist-summary {
-    display: flex;
-    justify-content: center;
-    margin-top: 100px;
+  display: flex;
+  justify-content: center;
+  margin-top: 100px;
 }
 
-
 .artist-summary-details {
-    text-align: end;
+  text-align: end;
 }
 
 .circle-image {
-    border-radius: 50%;
-    margin-right: 20px;
-    height: 250px;
-    width: 250px;
+  width: 100%;
+  height: auto;
+}
+
+.circle-image-container {
+  width: 250px;
+  height: 250px;
+  border-radius: 50%;
+  overflow: hidden;
 }
 
 .audio-button {
-    background-color: transparent;
-    border: none;
-    padding: 0;
-    cursor: pointer;
-    position: relative;
+  background-color: transparent;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  position: relative;
 }
 
 .album-image {
-    margin-right: 20px;
+  margin-right: 20px;
 }
 
 .top-track {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 20px;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
 }
 
 .top-track_container {
-    display: flex;
+  display: flex;
 }
