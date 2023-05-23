@@ -1,8 +1,14 @@
 .search {
     display: flex;
+    margin-top: 20px;
 }
 
-input {
-    margin-top: 20px;
-    /* border-radius: 10px; */
+.search-button {
+    background-color: #121212;
+    border: none;
+}
+
+
+i {
+    color: #D3D3D3;
 }

@@ -1,16 +1,33 @@
 import React, { useState } from "react";
-import "./Search.css"
+import "./Search.css";
 
-const Search = ({ setSearchInput, handleSubmitSongSearch, setDisplaySearchResults }) => {
+const Search = ({
+  setSearchInput,
+  handleSubmitSongSearch,
+  setDisplaySearchResults,
+}) => {
   return (
     <div className="search">
       <form>
-        <input
-          placeholder="Enter artist name..."
-          onChange={(e) => setSearchInput(e.target.value)}
-          onClick={() => setDisplaySearchResults(true)}
-        />
-        <button type="submit" onClick={(event) => handleSubmitSongSearch(event)}>Search</button>
+        <div>
+          <input
+            placeholder="Enter artist name..."
+            onChange={(e) => setSearchInput(e.target.value)}
+            onClick={() => setDisplaySearchResults(true)}
+          />
+          <button
+            className="search-button"
+            type="submit"
+            onClick={(event) => handleSubmitSongSearch(event)}
+          >
+            <i
+              class="fa fa-search"
+              aria-hidden="true"
+              type="submit"
+              onClick={(event) => handleSubmitSongSearch(event)}
+            ></i>
+          </button>
+        </div>
       </form>
     </div>
   );
