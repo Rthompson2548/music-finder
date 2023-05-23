@@ -1,3 +1,8 @@
+i {
+    font-size: 30px;
+    margin-right: 10px;
+}
+
 .artist-summary {
     display: flex;
     justify-content: center;
@@ -14,6 +19,14 @@
     margin-right: 20px;
     height: 250px;
     width: 250px;
+}
+
+.audio-button {
+    background-color: transparent;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    position: relative;
 }
 
 .album-image {

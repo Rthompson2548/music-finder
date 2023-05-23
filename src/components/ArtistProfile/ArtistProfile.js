@@ -21,6 +21,7 @@ const ArtistProfile = ({
 
   return (
     <div>
+      
       <ArtistSummary artistData={artistData} />
       <ArtistTopTracks
         artistTopTracks={artistTopTracks}

@@ -34,18 +34,34 @@ const ArtistTopTracks = ({ artistTopTracks, audio, setAudio }) => {
               </h3>
             </div>
             <div>
-              <button
-                onClick={() => handlePlay(track.preview_url)}
-                disabled={track.preview_url === null}
-              >
-                Play
-              </button>
-              <button
-                onClick={handlePause}
-                disabled={track.preview_url === null}
-              >
-                Pause
-              </button>
+              {track.preview_url === null ? (
+                <div>
+                  {/* <p>Preview unavailable</p> */}
+                  <i
+                    class="fa fa-ban"
+                    aria-hidden="true"
+                    style={{ color: "#D3D3D3" }}
+                  ></i>
+                </div>
+              ) : (
+                <div>
+                  <i
+                    onClick={() => handlePlay(track.preview_url)}
+                    disabled={track.preview_url === null}
+                    class="fa fa-play-circle"
+                    aria-hidden="true"
+                    style={{ color: "#1DB954" }}
+                  ></i>
+
+                  <i
+                    onClick={handlePause}
+                    disabled={track.preview_url === null}
+                    class="fa fa-pause-circle"
+                    aria-hidden="true"
+                    style={{ color: "#D3D3D3" }}
+                  ></i>
+                </div>
+              )}
             </div>
           </li>
         ))}
