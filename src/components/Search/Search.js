@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import "./Search.css";
 
 const Search = ({
+  searchInput,
   setSearchInput,
   handleSubmitSongSearch,
   setDisplaySearchResults,
@@ -14,6 +15,7 @@ const Search = ({
             placeholder="Enter artist name..."
             onChange={(e) => setSearchInput(e.target.value)}
             onClick={() => setDisplaySearchResults(true)}
+            value={searchInput}
           />
           <button
             className="search-button"

@@ -66,6 +66,7 @@ const App = () => {
 
   // Handle when a user selects an artist from the search results dropdown
   const handleSearchResultClick = async (currentArtist) => {
+    setSearchInput(currentArtist.name)
     setDisplayArtistData(false);
     await getArtistByID(currentArtist.id);
     await getArtistTopTracks(currentArtist.id);
@@ -74,6 +75,7 @@ const App = () => {
   };
 
   const handleSearchArtist = async (artist) => {
+    setSearchInput(artist.name)
     // Get request with artist name to get artist Spotify ID
     let getArtistID = await fetch(
       `${BASE_URL}/v1/search?q=${artist}&type=artist`,
@@ -134,6 +136,7 @@ const App = () => {
       <div className="artistSearch">
         <div className="artistSearch_container">
           <Search
+          searchInput={searchInput}
             setSearchInput={setSearchInput}
             handleSubmitSongSearch={handleSubmitSongSearch}
             setDisplaySearchResults={setDisplaySearchResults}
@@ -149,7 +152,6 @@ const App = () => {
                   key={res.id}
                   // onClick={() => handleSearchResultClick(res.id)}
                   onClick={() => handleSearchResultClick(res)}
-
                 >
                   {res.name}
                 </li>
