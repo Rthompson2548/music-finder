@@ -65,10 +65,10 @@ const App = () => {
   };
 
   // Handle when a user selects an artist from the search results dropdown
-  const handleSearchResultClick = async (artistID) => {
+  const handleSearchResultClick = async (currentArtist) => {
     setDisplayArtistData(false);
-    await getArtistByID(artistID);
-    await getArtistTopTracks(artistID);
+    await getArtistByID(currentArtist.id);
+    await getArtistTopTracks(currentArtist.id);
     setDisplayArtistData(true);
     setDisplaySearchResults(false);
   };
@@ -147,7 +147,9 @@ const App = () => {
               searchResults.map((res) => (
                 <li
                   key={res.id}
-                  onClick={() => handleSearchResultClick(res.id)}
+                  // onClick={() => handleSearchResultClick(res.id)}
+                  onClick={() => handleSearchResultClick(res)}
+
                 >
                   {res.name}
                 </li>
