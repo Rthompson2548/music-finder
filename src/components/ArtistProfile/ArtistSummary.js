@@ -5,6 +5,7 @@ import "../ArtistProfile/ArtistProfile.css";
 const ArtistSummary = ({ artistData }) => {
   return (
     <div className="artist-summary">
+      <h1>{artistData.name}</h1>
       <div>
         <img src={artistData.images[1].url} className="circle-image" />
       </div>

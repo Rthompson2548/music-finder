@@ -158,7 +158,7 @@ const App = () => {
 
       {displayArtistData === true && (
         <div>
-          <h1>{artistData.name}</h1>
+          {/* <h1>{artistData.name}</h1> */}
           <ArtistProfile
             artistData={artistData}
             artistProfileInfo={artistProfileInfo}
