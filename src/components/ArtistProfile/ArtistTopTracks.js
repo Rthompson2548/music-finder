@@ -18,6 +18,17 @@ const ArtistTopTracks = ({ artistTopTracks, audio, setAudio }) => {
     }
   };
 
+  function formatTime(milliseconds) {
+    const totalSeconds = Math.floor(milliseconds / 1000);
+    const minutes = Math.floor(totalSeconds / 60);
+    const seconds = totalSeconds % 60;
+  
+    const formattedMinutes = String(minutes).padStart(1, '0');
+    const formattedSeconds = String(seconds).padStart(2, '0');
+  
+    return `${formattedMinutes}:${formattedSeconds}`;
+  }
+
   return (
     <ul>
       {artistTopTracks &&
@@ -31,8 +42,10 @@ const ArtistTopTracks = ({ artistTopTracks, audio, setAudio }) => {
               >
                 {track.name}
               </h3>
+                
             </div>
-            <div>
+            <div style={{ display: "flex", alignItems: "center" }}>
+            <p className="track-time">{formatTime(track.duration_ms)}</p>
               {track.preview_url === null ? (
                 <div>
                   {/* <p>Preview unavailable</p> */}

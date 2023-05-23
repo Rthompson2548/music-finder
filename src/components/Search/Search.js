@@ -14,7 +14,7 @@ const Search = ({
           <input
             placeholder="Enter artist name..."
             onChange={(e) => setSearchInput(e.target.value)}
-            onClick={() => setDisplaySearchResults(true)}
+            // onClick={() => setDisplaySearchResults(true)}
             value={searchInput}
           />
           <button

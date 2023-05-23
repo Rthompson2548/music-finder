@@ -46,3 +46,7 @@ i {
 .top-track_container {
   display: flex;
 }
+
+.track-time {
+    margin-right: 20px;
+}

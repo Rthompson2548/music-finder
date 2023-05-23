@@ -75,7 +75,7 @@ const App = () => {
   };
 
   const handleSearchArtist = async (artist) => {
-    setSearchInput(artist.name)
+    // setSearchInput(artist.name)
     // Get request with artist name to get artist Spotify ID
     let getArtistID = await fetch(
       `${BASE_URL}/v1/search?q=${artist}&type=artist`,
