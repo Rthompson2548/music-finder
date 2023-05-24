@@ -1,8 +1,12 @@
 import React, { useState } from "react";
 import "../ArtistProfile/ArtistProfile.css";
+import PlayPauseButtons from "./PlayPauseButtons";
 
 const ArtistTopTracks = ({ artistTopTracks, audio, setAudio }) => {
+  const [playing, setPlaying] = useState(false);
+
   const handlePlay = (previewUrl) => {
+    setPlaying(true);
     if (audio) {
       audio.pause();
     }
@@ -13,6 +17,7 @@ const ArtistTopTracks = ({ artistTopTracks, audio, setAudio }) => {
   };
 
   const handlePause = () => {
+    setPlaying(false);
     if (audio) {
       audio.pause();
     }
@@ -22,10 +27,10 @@ const ArtistTopTracks = ({ artistTopTracks, audio, setAudio }) => {
     const totalSeconds = Math.floor(milliseconds / 1000);
     const minutes = Math.floor(totalSeconds / 60);
     const seconds = totalSeconds % 60;
-  
-    const formattedMinutes = String(minutes).padStart(1, '0');
-    const formattedSeconds = String(seconds).padStart(2, '0');
-  
+
+    const formattedMinutes = String(minutes).padStart(1, "0");
+    const formattedSeconds = String(seconds).padStart(2, "0");
+
     return `${formattedMinutes}:${formattedSeconds}`;
   }
 
@@ -37,15 +42,14 @@ const ArtistTopTracks = ({ artistTopTracks, audio, setAudio }) => {
             <div className="top-track_container">
               <img src={track.album.images[2].url} className="album-image" />
               <h3
-                // onClick={() => handlePlay(track.preview_url)}
-                // disabled={track.preview_url === null}
+              // onClick={() => handlePlay(track.preview_url)}
+              // disabled={track.preview_url === null}
               >
                 {track.name}
               </h3>
-                
             </div>
             <div style={{ display: "flex", alignItems: "center" }}>
-            <p className="track-time">{formatTime(track.duration_ms)}</p>
+              <p className="track-time">{formatTime(track.duration_ms)}</p>
               {track.preview_url === null ? (
                 <div>
                   {/* <p>Preview unavailable</p> */}
@@ -56,23 +60,13 @@ const ArtistTopTracks = ({ artistTopTracks, audio, setAudio }) => {
                   ></i>
                 </div>
               ) : (
-                <div>
-                  <i
-                    onClick={() => handlePlay(track.preview_url)}
-                    disabled={track.preview_url === null}
-                    class="fa fa-play-circle"
-                    aria-hidden="true"
-                    style={{ color: "#1DB954" }}
-                  ></i>
-
-                  <i
-                    onClick={handlePause}
-                    disabled={track.preview_url === null}
-                    class="fa fa-pause-circle"
-                    aria-hidden="true"
-                    style={{ color: "#D3D3D3" }}
-                  ></i>
-                </div>
+                <PlayPauseButtons
+                  handlePlay={handlePlay}
+                  handlePause={handlePause}
+                  track={track}
+                  playing={playing}
+                  setPlaying={setPlaying}
+                />
               )}
             </div>
           </li>
