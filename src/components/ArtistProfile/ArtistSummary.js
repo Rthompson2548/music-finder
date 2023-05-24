@@ -7,9 +7,15 @@ const ArtistSummary = ({ artistData }) => {
     <div className="artist-summary">
       <div>
         <h1>{artistData.name}</h1>
-        <div className="circle-image-container">
-          <img src={artistData.images[1].url} className="circle-image" />
-        </div>
+       
+        {
+          artistData.images[1].url ? (
+          <div className="circle-image-container">
+            <img src={artistData.images[1].url} className="circle-image" />
+          </div>) 
+          :  
+          <i class="fa-solid fa-user"></i>
+        }
       </div>
       <div className="artist-summary-details">
         <h2>#{artistData.popularity}</h2>
