@@ -5,20 +5,21 @@ import PlayPauseButtons from "./PlayPauseButtons";
 const ArtistTopTracks = ({ artistTopTracks, audio, setAudio }) => {
   const [playing, setPlaying] = useState(false);
 
-  const handlePlay = (previewUrl) => {
+  const handlePlay = (track) => {
+    console.log(`playing track id: ${track.id}`);
     setPlaying(true);
     if (audio) {
       audio.pause();
     }
 
-    const newAudio = new Audio(previewUrl);
+    const newAudio = new Audio(track.preview_url);
     setAudio(newAudio);
     newAudio.play();
   };
 
-  const handlePause = () => {
+  const handlePause = (track) => {
     setPlaying(false);
-    if (audio) {
+    if (audio && audio.src === track.preview_url) {
       audio.pause();
     }
   };
