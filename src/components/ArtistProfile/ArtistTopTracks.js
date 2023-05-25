@@ -6,7 +6,6 @@ const ArtistTopTracks = ({ artistTopTracks, audio, setAudio }) => {
   const [playing, setPlaying] = useState(false);
 
   const handlePlay = (track) => {
-    console.log(`playing track id: ${track.id}`);
     setPlaying(true);
     if (audio) {
       audio.pause();
@@ -42,12 +41,8 @@ const ArtistTopTracks = ({ artistTopTracks, audio, setAudio }) => {
           <li key={track.id} className="top-track">
             <div className="top-track_container">
               <img src={track.album.images[2].url} className="album-image" />
-              <h3
-              // onClick={() => handlePlay(track.preview_url)}
-              // disabled={track.preview_url === null}
-              >
-                {track.name}
-              </h3>
+              <h3 className="track-title">{track.name}</h3>
+              <a href={track.external_urls.spotify} target="_blank">View on Spotify</a>
             </div>
             <div style={{ display: "flex", alignItems: "center" }}>
               <p className="track-time">{formatTime(track.duration_ms)}</p>

@@ -22,12 +22,7 @@ const Search = ({
             type="submit"
             onClick={(event) => handleSubmitSongSearch(event)}
           >
-            <i
-              class="fa fa-search"
-              aria-hidden="true"
-              type="submit"
-              onClick={(event) => handleSubmitSongSearch(event)}
-            ></i>
+            <h3>Search</h3>
           </button>
         </div>
       </form>
