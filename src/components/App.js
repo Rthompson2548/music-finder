@@ -22,6 +22,7 @@ const App = () => {
   const [artistProfileInfo, setArtistProfileInfo] = useState([]);
   const [displayArtistData, setDisplayArtistData] = useState(false);
   const [audio, setAudio] = useState(null);
+  const [trackID, setTrackID] = useState(null);
 
   const handleSubmitSongSearch = async (event) => {
     event.preventDefault();
@@ -131,6 +132,13 @@ const App = () => {
     }
   }, [displayArtistData]);
 
+
+  // Handles when track is clicked
+  useEffect(() => {
+    console.log(`track id updated to ${trackID}`)
+  }, [trackID]);
+
+
   return (
     <div className="App">
       <div className="artistSearch">
@@ -169,6 +177,8 @@ const App = () => {
             artistTopTracks={artistTopTracks}
             audio={audio} 
             setAudio={setAudio}
+            trackID={trackID}
+            setTrackID={setTrackID}
           />
         </div>
       )}

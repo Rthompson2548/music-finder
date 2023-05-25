@@ -8,6 +8,8 @@ const ArtistProfile = ({
   artistTopTracks,
   audio,
   setAudio,
+  trackID, 
+  setTrackID,
 }) => {
 
   if (!artistProfileInfo) {
@@ -26,6 +28,8 @@ const ArtistProfile = ({
         artistTopTracks={artistTopTracks}
         audio={audio}
         setAudio={setAudio}
+        trackID={trackID}
+        setTrackID={setTrackID}
       />
     </div>
   );

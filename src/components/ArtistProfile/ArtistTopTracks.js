@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import "../ArtistProfile/ArtistProfile.css";
 import PlayPauseButtons from "./PlayPauseButtons";
 
-const ArtistTopTracks = ({ artistTopTracks, audio, setAudio }) => {
+const ArtistTopTracks = ({ artistTopTracks, audio, setAudio, trackID, setTrackID }) => {
   const [playing, setPlaying] = useState(false);
 
   const handlePlay = (track) => {
@@ -34,15 +34,21 @@ const ArtistTopTracks = ({ artistTopTracks, audio, setAudio }) => {
     return `${formattedMinutes}:${formattedSeconds}`;
   }
 
+  const handleSelectTrack = (trackId) => {
+    console.log(trackID)
+    // setTrackID(trackId);
+  }
+
   return (
     <ul>
       {artistTopTracks &&
         artistTopTracks.tracks.map((track) => (
           <li key={track.id} className="top-track">
             <div className="top-track_container">
-              <img src={track.album.images[2].url} className="album-image" />
+              {track.album.images[2].url && <img src={track.album.images[2].url} className="album-image" />}
               <h3 className="track-title">{track.name}</h3>
               <a href={track.external_urls.spotify} target="_blank">View on Spotify</a>
+              <p onClick={handleSelectTrack(track.id)}>More info</p>
             </div>
             <div style={{ display: "flex", alignItems: "center" }}>
               <p className="track-time">{formatTime(track.duration_ms)}</p>
