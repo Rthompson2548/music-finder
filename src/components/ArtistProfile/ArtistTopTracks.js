@@ -48,7 +48,7 @@ const ArtistTopTracks = ({ artistTopTracks, audio, setAudio, trackID, setTrackID
               {track.album.images[2].url && <img src={track.album.images[2].url} className="album-image" />}
               <h3 className="track-title">{track.name}</h3>
               <a href={track.external_urls.spotify} target="_blank">View on Spotify</a>
-              <p onClick={handleSelectTrack(track.id)}>More info</p>
+              <p onClick={() => setTrackID(track.id)}>More info</p>
             </div>
             <div style={{ display: "flex", alignItems: "center" }}>
               <p className="track-time">{formatTime(track.duration_ms)}</p>

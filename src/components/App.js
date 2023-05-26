@@ -52,6 +52,17 @@ const App = () => {
       });
   };
 
+  const getTrackByID = async (trackID) => {
+    await fetch(`${BASE_URL}/v1/tracks/${trackID}`, artistParams)
+    .then((res) => res.json())
+    .then((data) => console.log(data))
+  }
+
+  useEffect(() => {
+    console.log(`making fetch request to ${BASE_URL}/tracks/${trackID}`);
+    getTrackByID(trackID)
+  }, [trackID])
+
   const getArtistTopTracks = async (artistID) => {
     fetch(
       `${BASE_URL}/v1/artists/${artistID}/top-tracks?country=US`,
@@ -132,11 +143,6 @@ const App = () => {
     }
   }, [displayArtistData]);
 
-
-  // Handles when track is clicked
-  useEffect(() => {
-    console.log(`track id updated to ${trackID}`)
-  }, [trackID]);
 
 
   return (
