@@ -4,6 +4,7 @@ import Search from "./Search/Search";
 import ArtistProfile from "./ArtistProfile/ArtistProfile";
 import ArtistSummary from "./ArtistProfile/ArtistSummary";
 import ArtistTopTracks from "./ArtistProfile/ArtistTopTracks";
+import Track from "./Tracks/Track";
 
 const CLIENT_ID = "03b53e31e7fd47998f5196660f2a8121";
 const CLIENT_SECRET = "cb002e7d5245461a9add7e41b442d312";
@@ -23,6 +24,8 @@ const App = () => {
   const [displayArtistData, setDisplayArtistData] = useState(false);
   const [audio, setAudio] = useState(null);
   const [trackID, setTrackID] = useState(null);
+  const [trackInfo, setTrackInfo] = useState(null);
+  const [displayTrackInfo, setDisplayTrackInfo] = useState(false)
 
   const handleSubmitSongSearch = async (event) => {
     event.preventDefault();
@@ -53,14 +56,18 @@ const App = () => {
   };
 
   const getTrackByID = async (trackID) => {
+    setTrackInfo(null);
     await fetch(`${BASE_URL}/v1/tracks/${trackID}`, artistParams)
     .then((res) => res.json())
-    .then((data) => console.log(data))
+    .then((data) => {
+      setTrackInfo(data);
+      setDisplayTrackInfo(true)
+    })
+    .then(() => console.log(trackInfo))
   }
 
   useEffect(() => {
-    console.log(`making fetch request to ${BASE_URL}/tracks/${trackID}`);
-    getTrackByID(trackID)
+    getTrackByID(trackID);
   }, [trackID])
 
   const getArtistTopTracks = async (artistID) => {
@@ -185,9 +192,19 @@ const App = () => {
             setAudio={setAudio}
             trackID={trackID}
             setTrackID={setTrackID}
+            trackInfo={trackInfo}
+            setTrackInfo={setTrackInfo}
+            displayTrackInfo={displayTrackInfo}
+            setDisplayTrackInfo={setDisplayTrackInfo}
           />
         </div>
       )}
+
+      {
+        displayTrackInfo === true && trackID != null && (
+          <Track trackInfo={trackInfo} />
+        )
+      }
     </div>
   );
 };

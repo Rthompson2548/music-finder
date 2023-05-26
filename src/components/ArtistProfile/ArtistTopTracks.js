@@ -2,7 +2,15 @@ import React, { useState } from "react";
 import "../ArtistProfile/ArtistProfile.css";
 import PlayPauseButtons from "./PlayPauseButtons";
 
-const ArtistTopTracks = ({ artistTopTracks, audio, setAudio, trackID, setTrackID }) => {
+const ArtistTopTracks = ({
+  artistTopTracks,
+  audio,
+  setAudio,
+  trackID,
+  setTrackID,
+  trackInfo,
+  setTrackInfo,
+}) => {
   const [playing, setPlaying] = useState(false);
 
   const handlePlay = (track) => {
@@ -34,20 +42,19 @@ const ArtistTopTracks = ({ artistTopTracks, audio, setAudio, trackID, setTrackID
     return `${formattedMinutes}:${formattedSeconds}`;
   }
 
-  const handleSelectTrack = (trackId) => {
-    console.log(trackID)
-    // setTrackID(trackId);
-  }
-
   return (
     <ul>
       {artistTopTracks &&
         artistTopTracks.tracks.map((track) => (
           <li key={track.id} className="top-track">
             <div className="top-track_container">
-              {track.album.images[2].url && <img src={track.album.images[2].url} className="album-image" />}
+              {track.album.images[2].url && (
+                <img src={track.album.images[2].url} className="album-image" />
+              )}
               <h3 className="track-title">{track.name}</h3>
-              <a href={track.external_urls.spotify} target="_blank">View on Spotify</a>
+              <a href={track.external_urls.spotify} target="_blank">
+                View on Spotify
+              </a>
               <p onClick={() => setTrackID(track.id)}>More info</p>
             </div>
             <div style={{ display: "flex", alignItems: "center" }}>

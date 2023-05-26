@@ -10,6 +10,10 @@ const ArtistProfile = ({
   setAudio,
   trackID, 
   setTrackID,
+  trackInfo, 
+  setTrackInfo,
+  displayTrackInfo, 
+  setDisplayTrackInfo
 }) => {
 
   if (!artistProfileInfo) {
@@ -30,6 +34,10 @@ const ArtistProfile = ({
         setAudio={setAudio}
         trackID={trackID}
         setTrackID={setTrackID}
+        trackInfo={trackInfo}
+        setTrackInfo={setTrackInfo}
+        displayTrackInfo={displayTrackInfo}
+        setDisplayTrackInfo={setDisplayTrackInfo}
       />
     </div>
   );
