@@ -201,7 +201,7 @@ const App = () => {
       )}
 
       {
-        displayTrackInfo === true && trackID != null && (
+        displayTrackInfo === true && trackID != null && trackInfo != null && (
           <Track trackInfo={trackInfo} setDisplayTrackInfo={setDisplayTrackInfo} />
         )
       }
