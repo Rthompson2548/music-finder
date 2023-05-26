@@ -202,7 +202,7 @@ const App = () => {
 
       {
         displayTrackInfo === true && trackID != null && (
-          <Track trackInfo={trackInfo} />
+          <Track trackInfo={trackInfo} setDisplayTrackInfo={setDisplayTrackInfo} />
         )
       }
     </div>
