@@ -3,7 +3,7 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  position: relative;
+  /* position: relative; */
   position: absolute;
   top: 0%;
   left: 50%;
@@ -33,6 +33,20 @@ li {
 .App-logo {
   height: 40vmin;
   pointer-events: none;
+}
+
+.track {
+  position: fixed;
+  z-index: 9999;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #121212;
+  width: 400px;
+  max-width: 90%;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 0 100px rgba(132, 132, 132, 0.3);
 }
 
 @media (prefers-reduced-motion: no-preference) {

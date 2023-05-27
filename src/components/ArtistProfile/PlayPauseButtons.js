@@ -11,6 +11,7 @@ const PlayPauseButtons = ({ handlePause, handlePlay, track, playing, setPlaying 
           style={{ color: "#1DB954" }}
         ></i>
 
+
         <i
           onClick={() => handlePause(track)}
           disabled={track.preview_url === null}

@@ -25,7 +25,7 @@ const App = () => {
   const [audio, setAudio] = useState(null);
   const [trackID, setTrackID] = useState(null);
   const [trackInfo, setTrackInfo] = useState(null);
-  const [displayTrackInfo, setDisplayTrackInfo] = useState(false)
+  const [displayTrackInfo, setDisplayTrackInfo] = useState(false);
 
   const handleSubmitSongSearch = async (event) => {
     event.preventDefault();
@@ -58,17 +58,17 @@ const App = () => {
   const getTrackByID = async (trackID) => {
     setTrackInfo(null);
     await fetch(`${BASE_URL}/v1/tracks/${trackID}`, artistParams)
-    .then((res) => res.json())
-    .then((data) => {
-      setTrackInfo(data);
-      setDisplayTrackInfo(true)
-    })
-    .then(() => console.log(trackInfo))
-  }
+      .then((res) => res.json())
+      .then((data) => {
+        setTrackInfo(data);
+        setDisplayTrackInfo(true);
+      })
+      .then(() => console.log(trackInfo));
+  };
 
   useEffect(() => {
     getTrackByID(trackID);
-  }, [trackID])
+  }, [trackID]);
 
   const getArtistTopTracks = async (artistID) => {
     fetch(
@@ -79,13 +79,13 @@ const App = () => {
       .then((data) => {
         console.log("Top tracks:");
         console.log(data);
-        setArtistTopTracks(data);        
+        setArtistTopTracks(data);
       });
   };
 
   // Handle when a user selects an artist from the search results dropdown
   const handleSearchResultClick = async (currentArtist) => {
-    setSearchInput(currentArtist.name)
+    setSearchInput(currentArtist.name);
     setDisplayArtistData(false);
     await getArtistByID(currentArtist.id);
     await getArtistTopTracks(currentArtist.id);
@@ -150,14 +150,12 @@ const App = () => {
     }
   }, [displayArtistData]);
 
-
-
   return (
     <div className="App">
       <div className="artistSearch">
         <div className="artistSearch_container">
           <Search
-          searchInput={searchInput}
+            searchInput={searchInput}
             setSearchInput={setSearchInput}
             handleSubmitSongSearch={handleSubmitSongSearch}
             setDisplaySearchResults={setDisplaySearchResults}
@@ -188,7 +186,7 @@ const App = () => {
             artistData={artistData}
             artistProfileInfo={artistProfileInfo}
             artistTopTracks={artistTopTracks}
-            audio={audio} 
+            audio={audio}
             setAudio={setAudio}
             trackID={trackID}
             setTrackID={setTrackID}
@@ -200,11 +198,14 @@ const App = () => {
         </div>
       )}
 
-      {
-        displayTrackInfo === true && trackID != null && trackInfo != null && (
-          <Track trackInfo={trackInfo} setDisplayTrackInfo={setDisplayTrackInfo} />
-        )
-      }
+      {displayTrackInfo === true && trackID != null && trackInfo != null && (
+        <div className="track">
+          <Track
+            trackInfo={trackInfo}
+            setDisplayTrackInfo={setDisplayTrackInfo}
+          />
+        </div>
+      )}
     </div>
   );
 };
