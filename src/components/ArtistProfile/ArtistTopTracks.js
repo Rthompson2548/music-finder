@@ -51,10 +51,7 @@ const ArtistTopTracks = ({
               {track.album.images[2].url && (
                 <img src={track.album.images[2].url} className="album-image" />
               )}
-              <h3 className="track-title">{track.name}</h3>
-              <a href={track.external_urls.spotify} target="_blank">
-                View on Spotify
-              </a>
+              <h3 className="track-title" onClick={() => setTrackID(track.id)}>{track.name}</h3>
               <p onClick={() => setTrackID(track.id)}>More info</p>
             </div>
             <div style={{ display: "flex", alignItems: "center" }}>

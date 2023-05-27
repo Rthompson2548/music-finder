@@ -42,6 +42,10 @@ a {
   margin-right: 20px;
 }
 
+.track-title:hover {
+  text-decoration: underline;
+}
+
 .top-track {
   display: flex;
   justify-content: space-between;
