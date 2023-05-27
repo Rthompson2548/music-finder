@@ -1,4 +1,4 @@
-# Spotify Mock Application
+# Music Finder
 
 This is the README file for Music Finder, a Spotify mock application that allows users to search for an artist and view their stats, as well as their top tracks and details about each track. The project utilizes the Spotify API to fetch artist information and track data. The code is implemented using React, CSS, JavaScript, and Node.js.
 
