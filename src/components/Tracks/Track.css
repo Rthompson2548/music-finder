@@ -1,0 +1,14 @@
+.spotify-link:hover {
+    text-decoration: underline;
+    text-decoration-color: #1DB954;
+}
+
+.spotify-link a {
+    color: #1DB954 !important;
+}
+
+.close_button {
+    /* position: absolute; */
+    top: 0;
+    right: 0;
+}

@@ -1,29 +1,26 @@
 import React, { useState } from "react";
+import "../Tracks/Track.css";
 
 const Track = ({ trackInfo, setDisplayTrackInfo }) => {
   return (
-    <div>
-      <i
+    <div className="track-info">
+      <h4
         onClick={() => setDisplayTrackInfo(false)}
-        class="fa-xmark"
+        class="close-button"
         style={{ color: "#fff" }}
       >
-        X
-      </i>
+        <i class="fa fa-window-close" aria-hidden="true"></i>
+      </h4>
       <div>
         {trackInfo.album.images[2].url && (
           <img src={trackInfo.album.images[1].url} className="album-image" />
         )}
         <h2>{trackInfo.name}</h2>
-        <h3>
-          <a
-            href={trackInfo.external_urls.spotify}
-            target="_blank"
-            style={{ color: "#1DB954" }}
-          >
+        <h4 className="spotify-link">
+          <a href={trackInfo.external_urls.spotify} target="_blank">
             View on Spotify
           </a>
-        </h3>
+        </h4>
       </div>
     </div>
   );

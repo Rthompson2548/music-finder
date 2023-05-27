@@ -52,10 +52,14 @@ const ArtistTopTracks = ({
                 <img src={track.album.images[2].url} className="album-image" />
               )}
               <h3 className="track-title" onClick={() => setTrackID(track.id)}>{track.name}</h3>
-              <p onClick={() => setTrackID(track.id)}>More info</p>
+              <p className="more-info" onClick={() => setTrackID(track.id)}>
+              <i class="fa fa-info-circle" aria-hidden="true"></i>
+              </p>
             </div>
             <div style={{ display: "flex", alignItems: "center" }}>
+              
               <p className="track-time">{formatTime(track.duration_ms)}</p>
+              
               {track.preview_url === null ? (
                 <div>
                   {/* <p>Preview unavailable</p> */}

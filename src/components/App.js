@@ -57,14 +57,19 @@ const App = () => {
 
   const getTrackByID = async (trackID) => {
     setTrackInfo(null);
-    await fetch(`${BASE_URL}/v1/tracks/${trackID}`, artistParams)
-      .then((res) => res.json())
-      .then((data) => {
-        setTrackInfo(data);
-        setDisplayTrackInfo(true);
-      })
-      .then(() => console.log(trackInfo));
-  };
+    try {
+      const response = await fetch(`${BASE_URL}/v1/tracks/${trackID}`, artistParams);
+      if (!response.ok) {
+        throw new Error('Failed to fetch track info');
+      }
+      const data = await response.json();
+      setTrackInfo(data);
+      setDisplayTrackInfo(true);
+    } catch (error) {
+      // Handle error appropriately
+      console.error(error);
+    }
+  }
 
   useEffect(() => {
     getTrackByID(trackID);
@@ -198,7 +203,7 @@ const App = () => {
         </div>
       )}
 
-      {displayTrackInfo === true && trackID != null && trackInfo != null && (
+      {displayTrackInfo === true && trackID != null && trackInfo && (
         <div className="track">
           <Track
             trackInfo={trackInfo}
